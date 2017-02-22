@@ -221,7 +221,7 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Run `choco new prerequisites.extension`
 1. Delete the `prerequisites.extension\tools` directory.
 1. Create an `extensions` directory.
-1. Create a file called `prerequisites.psm1`
+1. Create a file called `prerequisites.psm1` in the extensions directory.
 1. Add this to the contents:
 
     ~~~powershell
@@ -260,6 +260,7 @@ We are going to create a package that checks for prerequisites prior to the inst
     }
     ~~~
 1. Update the nuspec appropriately. Ensure the version is at least `0.0.1`.
+1. In the nuspec, change `<file src="tools\**" target="tools" />` to `<file src="extensions\**" target="extensions" />`.
 1. Run `choco pack` against the directory with `prerequisites.extension.nuspec`.
 1. Copy the nupkg file up to the packages directory.
 1. Now head into the 1Password package from exercise and open `tools\chocolateyInstall.ps1`.
@@ -323,6 +324,7 @@ Install-ChocolateyInstallPackage @packageArgs
 
     ~~~
 1. Open `msi.template.nuspec` and edit it appropriately. Set the version to `1.0.0`.
+1. In the nuspec, change `<file src="tools\**" target="tools" />` to `<file src="templates\**" target="templates" />`.
 1. Call `choco pack`.
 1. Now we can push this up to our package server.
 1. Let's install this template - `choco install msi.template -s internal_chocolatey`.
