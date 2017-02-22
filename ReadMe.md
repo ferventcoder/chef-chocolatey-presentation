@@ -201,7 +201,19 @@ Let's start by packaging up and installing ChefDK
 1. When it finishes downloading and creating the package, note how that changes.
 1. Note how it appended `UseOriginalLocation` in this case.
 
-### Exercise 16: Create an extension package
+### Exercise 16: Download Chocolatey and Licensed packages
+To have a completely offline install for packaging, you need to remove
+
+1. Run `choco source list` to see your sources.
+1. Run `choco source disable -n chocolatey`.
+1. Run `choco source disable -n chocolatey.licensed` - **NOTE**: When you have a licensed version of Chocolatey, you are unable to remove this source. It can be disabled though.
+1. Run `choco download chocolatey -s https://chocolatey.org/api/v2/`.
+1. Run `choco download chocolatey.extension --ignore-dependencies --source https://licensedpackages.chocolatey.org/api/v2`
+1. Run `choco download chocolatey-agent --ignore-dependencies --source https://licensedpackages.chocolatey.org/api/v2/`
+1. Push all of these packages to your internal server.
+1. You are now using Chocolatey with internal only packages.
+
+### Exercise 17: Create an extension package
 We are going to create a package that checks for prerequisites prior to the install, such as ensuring at least 1 GB of free space.
 
 1. Run `choco new prerequisites.extension`
