@@ -72,8 +72,8 @@ Let's start by packaging up and installing ChefDK
 1. Run PowerShell as an administrator
 1. Type `packagebuilder` and hit enter.
 1. Go to https://downloads.chef.io/chefdk/#windows
- SHA256: 6a4993f1ff36200ffa2922d35a939cc650759b28774f9f745e2d32739f29d298
-URL: https://packages.chef.io/files/stable/chefdk/1.2.22/windows/2012/chefdk-1.2.22-1-x86.msi
+   * SHA256: 6a4993f1ff36200ffa2922d35a939cc650759b28774f9f745e2d32739f29d298
+   * URL: https://packages.chef.io/files/stable/chefdk/1.2.22/windows/2012/chefdk-1.2.22-1-x86.msi
 1. In the interface that comes up, let's put in the ChefDK up
 1. Also pass the SHA for verifying the file is what we hope.
 1. Click the box next to "Don't embed (don't include software binaries in package)?"
@@ -95,7 +95,7 @@ URL: https://packages.chef.io/files/stable/chefdk/1.2.22/windows/2012/chefdk-1.2
 ### Exercise 4: Create a package with Package Builder (Right Click)
 
 1. Download 1Password from this link - https://d13itkw33a7sus.cloudfront.net/dist/1P/win4/1Password-4.6.0.598.exe
-1. Right click on the file and choose "Create Chocolatey Package w/out GUI"
+1. Right click on the file and choose "Create Chocolatey Package w/out GUI" - **NOTE**: This may error if UAC is on - if so, choose `Create Chocolatey Package...` instead and just click Generate when it comes up.
 1. Inspect the output.
 1. Let's install this package - `choco install 1password -s . -y --dir c:\programs\1password` (from the working directory where the nupkg is located).
 1. Download Charles Proxy (both 32 and 64 bit) - https://www.charlesproxy.com/download/
