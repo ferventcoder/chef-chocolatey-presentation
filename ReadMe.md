@@ -55,7 +55,6 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
  1. Navigate to the packages folder. All commands from here will be in that packages folder.
 
 ### Exercise 1: Install Visual Studio Code
-
 1. Call `choco install visualstudiocode -y`
 1. Note the message "Environment Vars have changed".
 1. Type `code`. Notice that it errors.
@@ -63,7 +62,6 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 1. Type `code`. Note that it opens Visual Studio Code.
 
 ### Exercise 2: Create a package the old fashioned way
-
 1. Download Google Chrome from https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi and https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise.msi.
 1. From a command line, call `choco new googlechrome`.
 1. Work through the packaging setup to get a functioning unattended deployment.
@@ -113,14 +111,11 @@ Let's start by packaging up and installing ChefDK
 1. Right click on the 7zip nuspec and select "Compile Chocolatey Package..."
 
 ### Exercise 5: Create a package with Package Builder CLI
-
 1. Let's create that GoogleChrome package is again.
 1. Run `choco new --file googlechromestandaloneenterprise.msi --file64 googlechromestandaloneenterprise64.msi --build-package --outputdirectory $pwd`
 1. Inspect the output.
 
-
 ### Exercise 6: Create all the packages
-
 1. Type `packagebuilder`.
 1. Change output directory to add "programs" to the path (just to keep things separate). `C:\packages\programs` if you are in the packages folder.
 1. Click on the Programs and Features tab.
@@ -135,7 +130,6 @@ Let's start by packaging up and installing ChefDK
 1. Look at package folders that didn't generate a nupkg.
 
 ### Exercise 7: Set up a local Chocolatey.Server
-
 1. Ensure IIS and Asp.NET are installed
 1. `choco install chocolatey.server -y`
 1. Follow instructions at https://chocolatey.org/docs/how-to-set-up-chocolatey-server
@@ -161,9 +155,9 @@ Let's start by packaging up and installing ChefDK
 1. Run `choco upgrade 1password -s internal_chocolatey -y`
 
 ### Exercise 11: Reporting
-1. Run `choco list -lo --include-programs`.
+1. Run `choco list -lo --include-programs`
 1. Note the output.
-1. Run `choco outdated`.
+1. Run `choco outdated`
 1. Note the output.
 
 ### Exercise 12: Package Synchronizer - Automatic Sync
@@ -176,6 +170,7 @@ Let's start by packaging up and installing ChefDK
 1. Rename the `C:\ProgramData\Chocolatey\licensed` folder to `license`. This will license Chocolatey.
 1. Run `choco list -lo --include-programs`. Note if 1password package is still there.
 1. Look for a lib-synced folder in `C:\ProgramData\Chocolatey`.
+1. Note the contents.
 
 ### Exercise 13: Package Synchronizer - Choco Sync
 1. Go to `C:\ProgramData\chocolatey\.chocolatey` and delete the 7zip folder if it exists. Otherwise delete the 1password folder (these folders will have a version after them).
@@ -196,7 +191,7 @@ Let's start by packaging up and installing ChefDK
 1. Note the url variable.
 1. When it finishes downloading and creating the package, note how that changes.
 1. Note that there is a files folder that contains the binaries.
-1. Note that has appended `-UseOriginalLocation`
+1. Note how it has appended `-UseOriginalLocation` to the end of `Install-ChocolateyPackage`.
 
 ### Exercise 15: Internalize Notepad++ package
 1. Run `choco feature list`. Determine if `internalizeAppendUseOriginalLocation` is on. Turn it on otherwise.
@@ -207,3 +202,59 @@ Let's start by packaging up and installing ChefDK
 1. When it finishes downloading and creating the package, note how that changes.
 1. Note how it appended `UseOriginalLocation` in this case.
 
+### Exercise 16: Create an extension package
+We are going to create a package that checks for prerequisites prior to the install, such as ensuring at least 1 GB of free space.
+
+1. Run `choco new prerequisites.extension`
+1. Delete the `prerequisites.extension\tools` directory.
+1. Create an `extensions` directory.
+1. Create a file called `prerequisites.psm1`
+1. Add this to the contents:
+    ~~~powershell
+    # Export functions that start with capital letter, others are private
+    # Include file names that start with capital letters, ignore others
+    $ScriptRoot = Split-Path $MyInvocation.MyCommand.Definition
+
+    $pre = ls Function:\*
+    ls "$ScriptRoot\*.ps1" | ? { $_.Name -cmatch '^[A-Z]+' } | % { . $_  }
+    $post = ls Function:\*
+    $funcs = compare $pre $post | select -Expand InputObject | select -Expand Name
+    $funcs | ? { $_ -cmatch '^[A-Z]+'} | % { Export-ModuleMember -Function $_ }
+    ~~~
+1. Create a file `Ensure-ThreeGBs.ps1` and add the following contents:
+    ~~~powershell
+    <#
+      .SYNOPSIS
+      Ensures that there is at least 3 GB of space left on a machine or it will not allow installation
+
+      .OUTPUTS
+      [String]
+    #>
+    function Ensure-ThreeGBs {
+      Write-Debug "Running Get-AvailableDiskSpace to determine if there is enough space for installation."
+
+      $disk = Get-PSDrive C | Select-Object Used,Free
+      Write-Host "There is $($disk.Free) available"
+
+      $ThreeGBs = 3221225472
+      if ($disk.Free -lt $ThreeGBs) {
+        throw "There is less than 3GB of free space left."
+      }
+
+      return $disk.Free
+    }
+    ~~~
+1. Update the nuspec appropriately. Ensure the version is at least `0.0.1`.
+1. Run `choco pack` against the directory with `prerequisites.extension.nuspec`.
+1. Copy the nupkg file up to the packages directory.
+1. Now head into the 1Password package from exercise and open `tools\chocolateyInstall.ps1`.
+1. On line 1, add the following: `Ensure-ThreeGBs`. Save and close.
+1. Open up `1password.nuspec` and add a dependency on the prerequisites.extension package (right before `</metadata>`):
+    ~~~xml
+    <dependencies>
+      <dependency id="prerequisites.extension" version="0.0.1" />
+    </dependencies>
+    ~~~
+1. Compile the 1password package back up and put it in the folder next to the `prerequisites.extension` nupkg.
+1. Run `choco install 1password -s . -y`.
+1. Note in the install how it automatically loads up the prerequisites functions and makes them available without any more work on the part of the installation scripts.
