@@ -250,6 +250,7 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Now head into the 1Password package from exercise and open `tools\chocolateyInstall.ps1`.
 1. On line 1, add the following: `Ensure-ThreeGBs`. Save and close.
 1. Open up `1password.nuspec` and add a dependency on the prerequisites.extension package (right before `</metadata>`):
+
     ~~~xml
     <dependencies>
       <dependency id="prerequisites.extension" version="0.0.1" />
