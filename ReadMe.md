@@ -92,7 +92,7 @@ Let's start by packaging up and installing ChefDK
 
 ### Exercise 4: Create a package with Package Builder (Right Click)
 
-1. Download 1Password from this link - https://d13itkw33a7sus.cloudfront.net/dist/1P/win4/1Password-4.6.0.598.exe
+1. Download 1Password from this link - https://d13itkw33a7sus.cloudfront.net/dist/1P/win4/1Password-4.6.0.598.exe (ensure you unblock the file).
 1. Right click on the file and choose "Create Chocolatey Package w/out GUI" - **NOTE**: This may error if UAC is on - if so, choose `Create Chocolatey Package...` instead and just click Generate when it comes up.
 1. Inspect the output.
 1. Let's install this package - `choco install 1password -s . -y --dir c:\programs\1password` (from the working directory where the nupkg is located).
@@ -115,11 +115,12 @@ Let's start by packaging up and installing ChefDK
 1. Let's create that GoogleChrome package is again.
 1. Run `choco new --file googlechromestandaloneenterprise.msi --file64 googlechromestandaloneenterprise64.msi --build-package --outputdirectory $pwd`
 1. Inspect the output.
-1. Let's install this package - `choco install google-chrome -s . -y`.
+
 
 ### Exercise 6: Create all the packages
 
 1. Type `packagebuilder`.
+1. Change output directory to add "programs" to the path (just to keep things separate). `C:\packages\programs` if you are in the packages folder.
 1. Click on the Programs and Features tab.
 1. Click `Generate` in that tab.
 1. Watch the output.
