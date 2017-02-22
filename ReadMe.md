@@ -69,26 +69,26 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 
 ### Exercise 3: Create a package with Package Builder UI
 Let's start by packaging up and installing ChefDK
-1. Run PowerShell as an administrator
-1. Type `packagebuilder` and hit enter.
-1. Go to https://downloads.chef.io/chefdk/#windows (SHA256: 6a4993f1ff36200ffa2922d35a939cc650759b28774f9f745e2d32739f29d298 / URL: https://packages.chef.io/files/stable/chefdk/1.2.22/windows/2012/chefdk-1.2.22-1-x86.msi)
-1. In the interface that comes up, let's put in the ChefDK up
-1. Also pass the SHA for verifying the file is what we hope.
-1. Click the box next to "Don't embed (don't include software binaries in package)?"
-1. Click on Nuspec Information tab.
-1. In id, insert "chefdk".
-1. Click Generate
-1. Note that it creates a full package.
-1. Open up the packaging files in code.
-1. Open the chefdk.nuspec file.
+ 1. Run PowerShell as an administrator
+ 1. Type `packagebuilder` and hit enter.
+ 1. Go to https://downloads.chef.io/chefdk/#windows (SHA256: 6a4993f1ff36200ffa2922d35a939cc650759b28774f9f745e2d32739f29d298 / URL: https://packages.chef.io/files/stable/chefdk/1.2.22/windows/2012/chefdk-1.2.22-1-x86.msi)
+ 1. In the interface that comes up, let's put in the ChefDK up
+ 1. Also pass the SHA for verifying the file is what we hope.
+ 1. Click the box next to "Don't embed (don't include software binaries in package)?"
+ 1. Click on Nuspec Information tab.
+ 1. In id, insert "chefdk".
+ 1. Click Generate
+ 1. Note that it creates a full package.
+ 1. Open up the packaging files in code.
+ 1. Open the chefdk.nuspec file.
     * Note how auto-detection filled out some of the fields here
     * Optionally we can remove some of the commented sections to tidy this file up and provide more information.
-1. In the chocolateyInstall.ps1, note that it captured all MSI properties and prepared a fully ready to go installation.
+ 1. In the chocolateyInstall.ps1, note that it captured all MSI properties and prepared a fully ready to go installation.
     * Also note how it created nice packaging.
     * Optionally we can remove some of the comments and areas we don't need to tidy this up.
-1. Right click on chefdk.nuspec and select "Compile Chocolatey Package..." / type `choco pack` from that directory.
-1. Copy the resulting file up a directory
-1. Call `choco install chefdk -s . -y` (this tells Chocolatey to install from the local source location ".", which is current directory in both PowerShell and Cmd.exe)
+ 1. Right click on chefdk.nuspec and select "Compile Chocolatey Package..." / type `choco pack` from that directory.
+ 1. Copy the resulting file up a directory
+ 1. Call `choco install chefdk -s . -y` (this tells Chocolatey to install from the local source location ".", which is current directory in both PowerShell and Cmd.exe)
 
 ### Exercise 4: Create a package with Package Builder (Right Click)
 
