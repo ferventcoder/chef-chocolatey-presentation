@@ -133,7 +133,7 @@ Let's start by packaging up and installing ChefDK
 1. `choco install chocolatey.server -y`
 1. Follow instructions at https://chocolatey.org/docs/how-to-set-up-chocolatey-server
 1. Go to http://localhost, verify the setup, look at the password.
-1. Add this repository to your default sources. Call it `internal_chocolatey` - try `choco source -?` to learn how.
+1. Add this repository to your default sources. Call it `internal_chocolatey` - try `choco source -?` to learn how. Ensure `http://localhost/chocolatey` is the source location you use.
 
 ### Exercise 8: Push a package to a Chocolatey Server
 1. Run `choco search -s http://localhost/chocolatey`
@@ -148,7 +148,7 @@ Let's start by packaging up and installing ChefDK
 1. Push this updated package to the Chocolatey server.
 
 ### Exercise 10: Install package from Internal Repository
-1. Run `choco search 1password -s internal_chocolatey`
+1. Run `choco search 1password -s internal_chocolatey` (or whatever name you passed)
 1. Run `choco search 1password -s internal_chocolatey --all-versions`. Note the output.
 1. Run `choco search 1password --detailed`. Note the output.
 1. Run `choco upgrade 1password -s internal_chocolatey -y`
