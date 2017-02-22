@@ -123,12 +123,14 @@ Let's start by packaging up and installing ChefDK
 1. Change output directory to add "programs" to the path (just to keep things separate). `C:\packages\programs` if you are in the packages folder.
 1. Click on the Programs and Features tab.
 1. Click `Generate` in that tab.
-1. Watch the output.
+1. Note the output.
+1. Look at package folders that didn't generate a nupkg.
 
  OR
 
 1. `choco new --from-programs-and-features --build-package --outputdirectory programs`
-1. Watch the output.
+1. Note the output.
+1. Look at package folders that didn't generate a nupkg.
 
 
 *NOTE*: Other exercises left out for now so you don't work ahead too far.
