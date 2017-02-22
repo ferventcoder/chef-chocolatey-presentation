@@ -19,15 +19,23 @@
 It's preferred that you perform all of this exercise from a Vagrant image, but you can follow along with a physical Windows box.
 
 1. Ensure you have a recent version of [Vagrant](https://downloads.vagrantup.com). It is suggested you have at least 1.8.x for linked clones which makes Windows VMs come up lightning quick. Windows machine - `choco install vagrant -y` (then `refreshenv`).
-1. Install/upgrade `sahara` vagrant plugin - `vagrant plugin install sahara`.
 1. Pre-download the vagrant box we will be using - `vagrant init ferventcoder/win2012r2-x64-nocm` (this is a 4GB box, about 8GB unpacked).
 1. While that is downloading, ensure you have VirtualBox 5 or 5.1 installed. Windows install is `choco install virtualbox -y`
+1. All the rest of these commands will be done inside the Vagrant box (or box you are using for this).
 1. Place the license you received by email in demo/resources/licenses. Or copy the `chocolatey.license.xml` to `C:\ProgramData\Chocolatey\license` (you will need to create the license folder).
 1. Run `vagrant up` (or `vagrant provision` if already running).
 1. Install the licensed edition of Chocolatey - C4B (Chocolatey for Business):
    * Type `choco install chocolatey.extension -y`
    * If you get curious, check out `choco source list`.
-1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y`
+1. Run the following commands:
+
+   ~~~sh
+   choco config set virusScannerType VirusTotal
+   choco feature enable -n virusCheck
+   choco feature enable -n allowPreviewFeatures
+   ~~~
+
+1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y` - this may error.
 1. Install Launchy - `choco install launchy -y`
 1. Upgrade Notepad++ - `choco upgrade notepadplusplus -y`
 
