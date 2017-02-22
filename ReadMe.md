@@ -144,7 +144,8 @@ Let's start by packaging up and installing ChefDK
 
 ### Exercise 9: Upgrade a package
 1. Download an updated 1Password from this link - https://d13itkw33a7sus.cloudfront.net/dist/1P/win4/1Password-4.6.1.617.exe
-1. Use any method for creating packages to generate the packaging for this upgrade.
+1. Use any method for creating packages to generate the packaging for this upgrade. **NOTE**: When you do this, you may need to rename the existing 1Password package folder first.
+1. Instead of using Package Builder, you can instead download the file into the tools directory of the current package, edit the nuspec version, delete the previous installer exe, and update the chocolateyInstall.ps1 to point to the new installer and then compile the package.
 1. Push this updated package to the Chocolatey server.
 
 ### Exercise 10: Install package from Internal Repository
@@ -273,3 +274,10 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Compile the 1password package back up and put it in the folder next to the `prerequisites.extension` nupkg.
 1. Run `choco install 1password -s . -y`.
 1. Note in the install how it automatically loads up the prerequisites functions and makes them available without any more work on the part of the installation scripts.
+
+### Exercise 18: Create a package template for MSIs
+
+
+### Exercise 19: Create cookbook to install Chocolatey Server
+1. Turn https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally into a Chef cookbook
+1. Set up Cookbook to install Chocolatey.Server (IIS, ASP.NET)
