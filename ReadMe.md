@@ -195,7 +195,7 @@ Let's start by packaging up and installing ChefDK
 
 ### Exercise 15: Internalize Notepad++ package
 1. Run `choco feature list`. Determine if `internalizeAppendUseOriginalLocation` is on. Turn it on otherwise.
-1. Call `choco download adobereader --internalize --resources-location http://somewhere/internal` (literally).
+1. Call `choco download notepadplusplus --internalize --resources-location http://somewhere/internal` (literally).
 1. While it is downloading, head into the download folder it created.
 1. Open the `tools\chocolateyInstall.ps1` in Notepad++ or Code.
 1. Note the url variable.
@@ -346,7 +346,9 @@ Install-ChocolateyInstallPackage @packageArgs
 1. Note the output in the tim folder that is created.
 
 ### Exercise 23: Use package parameters
-
+1. Run `choco new packagewithparameters`
+1. Remove everything but the nuspec and `tools\chocolateyInstall.ps1`.
+1.
 
 ### Exercise 24: Create cookbook to install Chocolatey Server
 1. Turn https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally into a Chef cookbook
