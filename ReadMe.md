@@ -36,7 +36,6 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
    choco feature enable -n allowPreviewFeatures
    choco feature enable -n internalizeAppendUseOriginalLocation
    ~~~
-
 1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y` - this may error.
 1. Install Launchy - `choco install launchy -y`
 1. Upgrade Notepad++ - `choco upgrade notepadplusplus -y`
@@ -210,6 +209,7 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Create an `extensions` directory.
 1. Create a file called `prerequisites.psm1`
 1. Add this to the contents:
+
     ~~~powershell
     # Export functions that start with capital letter, others are private
     # Include file names that start with capital letters, ignore others
@@ -222,6 +222,7 @@ We are going to create a package that checks for prerequisites prior to the inst
     $funcs | ? { $_ -cmatch '^[A-Z]+'} | % { Export-ModuleMember -Function $_ }
     ~~~
 1. Create a file `Ensure-ThreeGBs.ps1` and add the following contents:
+
     ~~~powershell
     <#
       .SYNOPSIS
