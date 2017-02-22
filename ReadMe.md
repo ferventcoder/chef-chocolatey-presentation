@@ -334,7 +334,7 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Head into the bob folder.
 1. Note how it does replacements of all of the `[[variables]]`
 
-### Exercise 20: Update a packaging template
+### Exercise 20: Update a packaging template / use custom properties
 1. Let's add a new variable.
 1. Open `msi.template\templates\tools\chocolateyInstall.ps1`
 1. Add the following at the top: `# [[CustomVariable]]`
