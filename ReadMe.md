@@ -44,6 +44,8 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 1. Download Google Chrome from https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise64.msi and https://dl.google.com/tag/s/dl/chrome/install/googlechromestandaloneenterprise.msi.
 1. From a command line, call `choco new googlechrome`.
 1. Work through the packaging setup to get a functioning unattended deployment.
+1. Run `choco pack`
+1. Install the package using Chocolatey - `choco install googlechrome -y -s .`
 
 ### Exercise 3: Create a package with Package Builder UI
 Let's start by packaging up and installing ChefDK
