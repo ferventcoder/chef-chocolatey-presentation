@@ -22,7 +22,7 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 1. Install/upgrade `sahara` vagrant plugin - `vagrant plugin install sahara`.
 1. Pre-download the vagrant box we will be using - `vagrant init ferventcoder/win2012r2-x64-nocm` (this is a 4GB box, about 8GB unpacked).
 1. While that is downloading, ensure you have VirtualBox 5 or 5.1 installed. Windows install is `choco install virtualbox -y`
-1. Place the license you received by email in demo/resources/licenses.
+1. Place the license you received by email in demo/resources/licenses. Or copy the `chocolatey.license.xml` to `C:\ProgramData\Chocolatey\license` (you will need to create the license folder).
 1. Run `vagrant up` (or `vagrant provision` if already running).
 1. Install the licensed edition of Chocolatey - C4B (Chocolatey for Business):
    * Type `choco install chocolatey.licensed -y`
