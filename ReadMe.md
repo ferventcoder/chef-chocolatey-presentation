@@ -329,12 +329,12 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Now we can push this up to our package server.
 1. Let's install this template - `choco install msi.template -s internal_chocolatey`.
 
-### Exercise 21: Create a package from a template
+### Exercise 19: Create a package from a template
 1. Run `choco new bob -t msi`.
 1. Head into the bob folder.
 1. Note how it does replacements of all of the `[[variables]]`
 
-### Exercise 22: Update a packaging template
+### Exercise 20: Update a packaging template
 1. Let's add a new variable.
 1. Open `msi.template\templates\tools\chocolateyInstall.ps1`
 1. Add the following at the top: `# [[CustomVariable]]`
@@ -345,7 +345,7 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Now run `choco new tim -t msi CustomVariable="Yes"`
 1. Note the output in the tim folder that is created.
 
-### Exercise 23: Use package parameters
+### Exercise 21: Use package parameters
 1. Run `choco new packagewithparameters`
 1. Remove everything but the nuspec and `tools\chocolateyInstall.ps1`.
 1. In the nuspec, take a dependency on `chocolatey-core.extension` version `[1,3)` (which means at least v1, but anything less than v3).
@@ -361,6 +361,6 @@ We are going to create a package that checks for prerequisites prior to the inst
 1. Run `choco install packagewithparameters -s internal_chocolatey --params "'/Parameter1:Yes'"` and note the output.
 
 
-### Exercise 24: Create cookbook to install Chocolatey Server
+### Exercise 22: Create cookbook to install Chocolatey Server
 1. Turn https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally into a Chef cookbook
 1. Set up Cookbook to install Chocolatey.Server (IIS, ASP.NET)
