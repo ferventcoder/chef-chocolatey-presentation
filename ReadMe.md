@@ -279,49 +279,49 @@ We are going to create a package that checks for prerequisites prior to the inst
 ### Exercise 18: Create a package template for MSIs
 1. Run `choco new msi.template`.
 1. Delete the `msi.template\tools` directory.
-1. Run the following script from the top of the msi.template directory:
+1. Create `templates\msi.nuspec.template` and add the following contents:
 
     ~~~powershell
-@"<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
-  <metadata>
-    <id>[[PackageNameLower]]</id>
-    <title>[[PackageName]] (Install)</title>
-    <version>[[PackageVersion]]</version>
-    <authors>Original authors</authors>
-    <owners>[[MaintainerName]]</owners>
-    <description>__REPLACE__MarkDown_Okay [[AutomaticPackageNotesNuspec]]
-    </description>
-    <tags>[[PackageNameLower]] admin</tags>
-    <!--<dependencies>
-      <dependency id="" version="__VERSION__" />
-      <dependency id="" />
-    </dependencies>-->
-  </metadata>
-  <files>
-    <file src="tools\**" target="tools" />
-  </files>
-</package>
-"@ | Set-Content -Path templates\msi.nuspec.template -Encoding UTF8
+    <?xml version="1.0" encoding="utf-8"?>
+    <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+      <metadata>
+        <id>[[PackageNameLower]]</id>
+        <title>[[PackageName]] (Install)</title>
+        <version>[[PackageVersion]]</version>
+        <authors>Original authors</authors>
+        <owners>[[MaintainerName]]</owners>
+        <description>__REPLACE__MarkDown_Okay [[AutomaticPackageNotesNuspec]]
+        </description>
+        <tags>[[PackageNameLower]] admin</tags>
+        <!--<dependencies>
+          <dependency id="" version="__VERSION__" />
+          <dependency id="" />
+        </dependencies>-->
+      </metadata>
+      <files>
+        <file src="tools\**" target="tools" />
+      </files>
+    </package>
+    ~~~
+1. Create `templates\tools\chocolateyInstall.ps1` and add the following contents:
 
-@"$ErrorActionPreference = 'Stop';
-$packageName= '[[PackageName]]'
-$toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$fileLocation = Join-Path $toolsDir 'NAME_OF_EMBEDDED_INSTALLER_FILE'
+    ~~~powershell
+    $ErrorActionPreference = 'Stop';
+    $packageName= '[[PackageName]]'
+    $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+    $fileLocation = Join-Path $toolsDir 'NAME_OF_EMBEDDED_INSTALLER_FILE'
 
-$packageArgs = @{
-  packageName   = $packageName
-  unzipLocation = $toolsDir
-  fileType      = 'msi'
-  file         = $fileLocation
-  softwareName  = '[[PackageName]]*' #part or all of the Display Name as you see it in Programs and Features. It should be enough to be unique
-  silentArgs    = "/qn /norestart /l*v `"$env:TEMP\chocolatey\$($packageName)\$($packageName).MsiInstall.log`"" # ALLUSERS=1 DISABLEDESKTOPSHORTCUT=1 ADDDESKTOPICON=0 ADDSTARTMENU=0
-  validExitCodes= @(0, 3010, 1641)
-}
+    $packageArgs = @{
+      packageName   = $packageName
+      unzipLocation = $toolsDir
+      fileType      = 'msi'
+      file         = $fileLocation
+      softwareName  = '[[PackageName]]*' #part or all of the Display Name as you see it in Programs and Features. It should be enough to be unique
+      silentArgs    = "/qn /norestart /l*v `"$env:TEMP\chocolatey\$($packageName)\$($packageName).MsiInstall.log`"" # ALLUSERS=1 DISABLEDESKTOPSHORTCUT=1 ADDDESKTOPICON=0 ADDSTARTMENU=0
+      validExitCodes= @(0, 3010, 1641)
+    }
 
-Install-ChocolateyInstallPackage @packageArgs
-"@  | Set-Content -Path templates\tools\chocolateyInstall.ps1 -Encoding UTF8
-
+    Install-ChocolateyInstallPackage @packageArgs
     ~~~
 1. Open `msi.template.nuspec` and edit it appropriately. Set the version to `1.0.0`.
 1. In the nuspec, change `<file src="tools\**" target="tools" />` to `<file src="templates\**" target="templates" />`.
