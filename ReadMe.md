@@ -205,9 +205,10 @@ Let's start by packaging up and installing ChefDK
 To have a completely offline install for packaging, you need to remove
 
 1. Run `choco source list` to see your sources.
-1. Run `choco source disable -n chocolatey`.
+1. Run `choco source disable -n chocolatey`
 1. Run `choco source disable -n chocolatey.licensed` - **NOTE**: When you have a licensed version of Chocolatey, you are unable to remove this source. It can be disabled though.
-1. Run `choco download chocolatey -s https://chocolatey.org/api/v2/`.
+1. Run `choco download chocolatey -s https://chocolatey.org/api/v2/`
+1. Run `choco download chocolatey.server -s https://chocolatey.org/api/v2/`
 1. Run `choco download chocolatey.extension --ignore-dependencies --source https://licensedpackages.chocolatey.org/api/v2`
 1. Run `choco download chocolatey-agent --ignore-dependencies --source https://licensedpackages.chocolatey.org/api/v2/`
 1. Push all of these packages to your internal server.
