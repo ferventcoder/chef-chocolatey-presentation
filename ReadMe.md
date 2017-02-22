@@ -348,7 +348,18 @@ Install-ChocolateyInstallPackage @packageArgs
 ### Exercise 23: Use package parameters
 1. Run `choco new packagewithparameters`
 1. Remove everything but the nuspec and `tools\chocolateyInstall.ps1`.
-1.
+1. In the nuspec, take a dependency on `chocolatey-core.extension` version `[1,3)` (which means at least v1, but anything less than v3).
+1. In the `chocolateyInstall.ps1`, delete everything and just add the following:
+
+    ~~~powershell
+    $pp = Get-PackageParameters
+
+    Write-Warning "Parameter1 = '$($pp.Parameter1)'"
+    ~~~
+1. Package up the package and push it to your internal server.
+1. Ensure the chocolatey-core.extension package is up on the internal server as well.
+1. Run `choco install packagewithparameters -s internal_chocolatey --params "'/Parameter1:Yes'"` and note the output.
+
 
 ### Exercise 24: Create cookbook to install Chocolatey Server
 1. Turn https://chocolatey.org/docs/how-to-set-up-chocolatey-server#setup-normally into a Chef cookbook
