@@ -47,6 +47,8 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
       Import-Module "$ChocolateyProfile"
     }
     ~~~
+ 1. Create a folder for packages - `mkdir packages`
+ 1. Navigate to the packages folder. All commands from here will be in that packages folder.
 
 ### Exercise 1: Install Visual Studio Code
 
