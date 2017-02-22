@@ -31,14 +31,17 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 
    ~~~sh
    choco config set virusScannerType VirusTotal
+   choco config set cacheLocation c:\programdata\choco-cache
    choco feature enable -n virusCheck
    choco feature enable -n allowPreviewFeatures
+   choco feature enable -n internalizeAppendUseOriginalLocation
    ~~~
 
 1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y` - this may error.
 1. Install Launchy - `choco install launchy -y`
 1. Upgrade Notepad++ - `choco upgrade notepadplusplus -y`
 1. Install baretail - `choco install baretail -y`
+1. Install or upgrade `choco upgrade git -y`
 1. Add the PowerShell profile - type `Set-Content -Path $profile -Encoding UTF8 -Value ""`
 1. Open the profile file and add the following content:
 
@@ -109,7 +112,6 @@ Let's start by packaging up and installing ChefDK
 1. Add the proper silent arguments in the install script.
 1. Right click on the 7zip nuspec and select "Compile Chocolatey Package..."
 
-
 ### Exercise 5: Create a package with Package Builder CLI
 
 1. Let's create that GoogleChrome package is again.
@@ -132,5 +134,76 @@ Let's start by packaging up and installing ChefDK
 1. Note the output.
 1. Look at package folders that didn't generate a nupkg.
 
+### Exercise 7: Set up a local Chocolatey.Server
 
-*NOTE*: Other exercises left out for now so you don't work ahead too far.
+1. Ensure IIS and Asp.NET are installed
+1. `choco install chocolatey.server -y`
+1. Follow instructions at https://chocolatey.org/docs/how-to-set-up-chocolatey-server
+1. Go to http://localhost, verify the setup, look at the password.
+1. Add this repository to your default sources. Call it `internal_chocolatey` - try `choco source -?` to learn how.
+
+### Exercise 8: Push a package to a Chocolatey Server
+1. Run `choco search -s http://localhost/chocolatey`
+1. In the folder where we've generated packages, let's find 1Password nupkg.
+1. Run `choco push -s http://localhost -k chocolateyrocks` (note the push is different than the query url).
+1. Run `choco search -s http://localhost/chocolatey`. Run `choco search -s internal_chocolatey` and note the output should be the same.
+1. Note that the package is available.
+
+### Exercise 9: Upgrade a package
+1. Download an updated 1Password from this link - https://d13itkw33a7sus.cloudfront.net/dist/1P/win4/1Password-4.6.1.617.exe
+1. Use any method for creating packages to generate the packaging for this upgrade.
+1. Push this updated package to the Chocolatey server.
+
+### Exercise 10: Install package from Internal Repository
+1. Run `choco search 1password -s internal_chocolatey`
+1. Run `choco search 1password -s internal_chocolatey --all-versions`. Note the output.
+1. Run `choco search 1password --detailed`. Note the output.
+1. Run `choco upgrade 1password -s internal_chocolatey -y`
+
+### Exercise 11: Reporting
+1. Run `choco list -lo --include-programs`.
+1. Note the output.
+1. Run `choco outdated`.
+1. Note the output.
+
+### Exercise 12: Package Synchronizer - Automatic Sync
+1. Run `choco list -lo --include-programs`.
+1. Go to `C:\ProgramData\Chocolatey\lib`. Note the 1password package.
+1. Rename the `C:\ProgramData\Chocolatey\license` folder to `licensed`. This will unlicense Chocolatey.
+1. Go to Programs and Features.
+1. Manually uninstall 1Password.
+1. Run `choco list -lo --include-programs`. Note if 1password package is still there.
+1. Rename the `C:\ProgramData\Chocolatey\licensed` folder to `license`. This will license Chocolatey.
+1. Run `choco list -lo --include-programs`. Note if 1password package is still there.
+1. Look for a lib-synced folder in `C:\ProgramData\Chocolatey`.
+
+### Exercise 13: Package Synchronizer - Choco Sync
+1. Go to `C:\ProgramData\chocolatey\.chocolatey` and delete the 7zip folder if it exists. Otherwise delete the 1password folder (these folders will have a version after them).
+1. Run `choco list -lo --include-programs`.
+1. Note any applications not being managed as Chocolatey packages.
+1. Run `choco sync` - **NOTE**: If this errors, make sure you've turned on allowPreviewFeatures from exercise 0 to allow this feature to work.
+1. Note how it relinks 7zip or 1password to an existing installed package. This is recreating a lost link.
+1. Note that it is syncing with new packages for the rest of the items.
+1. Go to the temp directory to see the packaging it created.
+1. Run `choco list -lo --include-programs`.
+1. Note any applications not being managed as Chocolatey packages.
+
+### Exercise 14: Internalize AdobeReader package
+1. Run `choco feature list`. Determine if `internalizeAppendUseOriginalLocation` is on. Turn it on otherwise.
+1. Call `choco download adobereader --internalize`.
+1. While it is downloading, head into the download folder it created.
+1. Open the chocolateyInstall.ps1 in Notepad++ or Code.
+1. Note the url variable.
+1. When it finishes downloading and creating the package, note how that changes.
+1. Note that there is a files folder that contains the binaries.
+1. Note that has appended `-UseOriginalLocation`
+
+### Exercise 15: Internalize Notepad++ package
+1. Run `choco feature list`. Determine if `internalizeAppendUseOriginalLocation` is on. Turn it on otherwise.
+1. Call `choco download adobereader --internalize --resources-location http://somewhere/internal`.
+1. While it is downloading, head into the download folder it created.
+1. Open the chocolateyInstall.ps1 in Notepad++ or Code.
+1. Note the url variable.
+1. When it finishes downloading and creating the package, note how that changes.
+1. Note how it appended `UseOriginalLocation` in this case.
+
