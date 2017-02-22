@@ -27,6 +27,9 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 1. Install the licensed edition of Chocolatey - C4B (Chocolatey for Business):
    * Type `choco install chocolatey.licensed -y`
    * If you get curious, check out `choco source list`.
+1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y`
+1. Install Launchy - `choco install launchy -y`
+
 
 ### Exercise 1: Install Visual Studio Code
 
