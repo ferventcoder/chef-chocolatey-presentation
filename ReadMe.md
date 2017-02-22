@@ -38,6 +38,15 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y` - this may error.
 1. Install Launchy - `choco install launchy -y`
 1. Upgrade Notepad++ - `choco upgrade notepadplusplus -y`
+1. Add the PowerShell profile - type `Set-Content -Path $profile -Encoding UTF8 -Value ""`
+1. Open the profile file and add the following content:
+
+    ~~~powershell
+    $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    if (Test-Path($ChocolateyProfile)) {
+      Import-Module "$ChocolateyProfile"
+    }
+    ~~~
 
 ### Exercise 1: Install Visual Studio Code
 
