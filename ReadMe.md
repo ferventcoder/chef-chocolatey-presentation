@@ -197,7 +197,7 @@ Let's start by packaging up and installing ChefDK
 1. Run `choco feature list`. Determine if `internalizeAppendUseOriginalLocation` is on. Turn it on otherwise.
 1. Call `choco download adobereader --internalize --resources-location http://somewhere/internal` (literally).
 1. While it is downloading, head into the download folder it created.
-1. Open the chocolateyInstall.ps1 in Notepad++ or Code.
+1. Open the `tools\chocolateyInstall.ps1` in Notepad++ or Code.
 1. Note the url variable.
 1. When it finishes downloading and creating the package, note how that changes.
 1. Note how it appended `UseOriginalLocation` in this case.
