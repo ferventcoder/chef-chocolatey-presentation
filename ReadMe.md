@@ -25,7 +25,7 @@ It's preferred that you perform all of this exercise from a Vagrant image, but y
 1. Place the license you received by email in demo/resources/licenses. Or copy the `chocolatey.license.xml` to `C:\ProgramData\Chocolatey\license` (you will need to create the license folder).
 1. Run `vagrant up` (or `vagrant provision` if already running).
 1. Install the licensed edition of Chocolatey - C4B (Chocolatey for Business):
-   * Type `choco install chocolatey.licensed -y`
+   * Type `choco install chocolatey.extension -y`
    * If you get curious, check out `choco source list`.
 1. Install the latest GUI - `choco install chocolateygui --source https://www.myget.org/F/chocolateygui/ --pre -y`
 1. Install Launchy - `choco install launchy -y`
